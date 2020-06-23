@@ -1,0 +1,103 @@
+body {
+  background-color: black;
+  text-align: center;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  white-space: nowrap;
+  margin: auto;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+  
+.tooltip .tooltipcontent {
+  visibility: hidden;
+  width: 150px;
+  background-color: white;
+  color: black;
+  text-align: left;
+  border-radius: 10px;
+  padding: 5px 0px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;
+  border: 1px solid black;
+  box-shadow: 2px 2px gray;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltipcontent {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip .tooltipcontent::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+.tooltip:hover .tooltipcontent {
+  visibility: visible;
+}
+
+.superrare {
+  background-color: purple;
+  color: white;
+  text-align: center;
+}
+
+.tooltiptext {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.commands button {
+  display: block;
+}
+
+.gameScreen {
+  display: table;
+  table-layout: fixed;
+}
+
+.commands,.playerStats,.combatScreen,.enemyStats {
+  display: table-cell;
+  vertical-align: top;
+  border: 3px solid white;
+  border-radius: 5px;
+}
+
+.playerStats,.enemyStats {
+  width: 200px;
+  padding: 5px;
+}
+
+.commands {
+  width: 180px;
+  padding: 5px;
+}
+
+.combatScreen {
+  width: 400px;
+  padding: 5px;
+}
+
+.playerLabels,.playerRawStats,.enemyLabels,.enemyRawStats {
+  display: inline-block;
+}
+
+.commandBtn {
+  width: 150px;
+  height: 35px;
+  font-size: 15px;
+}

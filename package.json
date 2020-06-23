@@ -1,0 +1,32 @@
+{
+  "name": "polygonquest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisRH/PolygonQuest.git"
+  },
+  "author": "LouisRH",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LouisRH/PolygonQuest/issues"
+  },
+  "homepage": "https://github.com/LouisRH/PolygonQuest#readme",
+  "dependencies": {
+    "angular": "^1.8.0",
+    "angular-route": "^1.8.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-csp-header": "^2.3.2",
+    "mongodb": "^3.5.9",
+    "npm": "^6.14.5",
+    "tippy.js": "^6.2.3",
+    "uuid": "^8.1.0"
+  }
+}
