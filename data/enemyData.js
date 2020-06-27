@@ -71,10 +71,10 @@ function seedEnemies(){
         let warrior = await newEnemy({
             id: 2,
             name: "Warrior",
-            HPScale: 150,
+            HPScale: 130,
             MPScale: 60,
-            strScale: 120,
-            defScale: 120,
+            strScale: 110,
+            defScale: 110,
             agiScale: 50,
             aiVals: {
                 attack: 7,

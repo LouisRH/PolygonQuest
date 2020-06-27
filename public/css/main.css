@@ -2,9 +2,157 @@ body {
   background-color: black;
   text-align: center;
   color: white;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Alata, Verdana, Geneva, Tahoma, sans-serif;
   white-space: nowrap;
   margin: auto;
+  width: 1050px;
+}
+
+.commands button {
+  display: block;
+  color: white;
+}
+
+.gameScreen {
+  margin-top: 5px;
+}
+
+.commands,.playerStats,.combatScreen,.enemyStats {
+  display: inline-block;
+  vertical-align: top;
+  border: 3px solid white;
+  border-radius: 5px;
+  height: 435px;
+}
+
+.playerStats,.enemyStats {
+  width: 200px;
+  padding: 5px;
+  text-align: left;
+}
+
+.commands {
+  width: 180px;
+  padding: 5px;
+}
+
+.combatScreen {
+  width: 400px;
+  padding: 5px;
+}
+
+.playerLabels,.playerRawStats,.enemyLabels,.enemyRawStats {
+  display: inline-block;
+  font-size: 20px;
+}
+
+.nametag,.HPMP,.exp,.weakResist {
+  font-size: 20px;
+}
+
+.exp,.weakResist {
+  margin-top: 25px;
+}
+
+p {
+  margin: 0px;
+}
+
+.playerLabels p, .playerRawStats p, .enemyLabels p, .enemyRawStats p {
+  margin-bottom: 15px;
+}
+
+.commandBtn {
+  width: 180px;
+  height: 50px;
+  font-size: 15px;
+  border-radius: 10px;
+  background-color: black;
+  border-color: white;
+  margin-bottom: 5px;
+  font-family: Alata, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#nextBtn {
+  margin-bottom: 0px;
+}
+
+#attackBtn,#equipmentBtn,#nextBtn {
+  font-size: 23px;
+}
+
+#cureBtn {
+  background-color: #abf7b2;
+  color: black;
+}
+
+#fireBtn {
+  background-color: #f22718;
+}
+
+#waterBtn {
+  background-color: #226df0;
+}
+
+#windBtn {
+  background-color: #26f039;
+  color: black;
+}
+
+#earthBtn {
+  background-color: #606901;
+}
+
+button:disabled {
+  background-color: lightgray;
+}
+
+#cureBtn:disabled,#fireBtn:disabled,#waterBtn:disabled,#windBtn:disabled,#earthBtn:disabled {
+  background-color: lightgray;
+  color: white;
+}
+
+.lvlInfo {
+  display: block;
+}
+
+.barContainer {
+  background-color: gray;
+  height: 10px;
+  width: 120px;
+  border-radius: 5px;
+  border-width: thin;
+  border-style: solid;
+  border-color: black;
+}
+
+.HPMP .barContainer,.exp .barContainer {
+  width: 190px;
+}
+
+.bar {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.spell {
+  background-color: lightgreen;
+}
+
+.HP {
+  background-color: red;
+}
+
+.MP {
+  background-color: #59b6f0;
+}
+
+.expBar {
+  background-color: #21cc2f;
+}
+
+.lvlTag,.barContainer {
+  display: inline-block;
 }
 
 .tooltip {
@@ -59,45 +207,4 @@ body {
 .tooltiptext {
   padding-left: 5px;
   padding-right: 5px;
-}
-
-.commands button {
-  display: block;
-}
-
-.gameScreen {
-  display: table;
-  table-layout: fixed;
-}
-
-.commands,.playerStats,.combatScreen,.enemyStats {
-  display: table-cell;
-  vertical-align: top;
-  border: 3px solid white;
-  border-radius: 5px;
-}
-
-.playerStats,.enemyStats {
-  width: 200px;
-  padding: 5px;
-}
-
-.commands {
-  width: 180px;
-  padding: 5px;
-}
-
-.combatScreen {
-  width: 400px;
-  padding: 5px;
-}
-
-.playerLabels,.playerRawStats,.enemyLabels,.enemyRawStats {
-  display: inline-block;
-}
-
-.commandBtn {
-  width: 150px;
-  height: 35px;
-  font-size: 15px;
 }

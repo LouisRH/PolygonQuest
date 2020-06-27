@@ -202,6 +202,9 @@ function calculateEnemyTurn(gameState, turns, defend) {
                 enemyDamage = Math.round(enemyDamage * 1.5);
                 turns.turn2.crit = true;
             }
+            if (turns.turn2.currPlayerStats.MaxHP === turns.turn2.currPlayerStats.HP && enemyDamage >= turns.turn2.currPlayerStats.HP) {
+                enemyDamage = turns.turn2.currPlayerStats.MaxHP - 1;
+            }
             turns.turn2.currPlayerStats.HP -= enemyDamage;
             turns.turn2.damage = enemyDamage;
             if (turns.turn2.currPlayerStats.HP <= 0) {
@@ -226,6 +229,9 @@ function calculateEnemyTurn(gameState, turns, defend) {
     } else if (action === "fire") {
         turns.turn2.message = "Fire";
         let enemyDamage = calculateDamage(turns.turn2.currEnemyStats.str, turns.turn2.currPlayerStats.def, 1.2);
+        if (turns.turn2.currPlayerStats.MaxHP === turns.turn2.currPlayerStats.HP && enemyDamage >= turns.turn2.currPlayerStats.HP) {
+            enemyDamage = turns.turn2.currPlayerStats.MaxHP - 1;
+        }
         turns.turn2.currPlayerStats.HP -= enemyDamage;
         turns.turn2.currEnemyStats.MP -= MPCost;
         if (turns.turn2.currEnemyStats.MP < 0) {
@@ -239,6 +245,9 @@ function calculateEnemyTurn(gameState, turns, defend) {
     } else if (action === "water") {
         turns.turn2.message = "Water";
         let enemyDamage = calculateDamage(turns.turn2.currEnemyStats.str, turns.turn2.currPlayerStats.def, 1.2);
+        if (turns.turn2.currPlayerStats.MaxHP === turns.turn2.currPlayerStats.HP && enemyDamage >= turns.turn2.currPlayerStats.HP) {
+            enemyDamage = turns.turn2.currPlayerStats.MaxHP - 1;
+        }
         turns.turn2.currPlayerStats.HP -= enemyDamage;
         turns.turn2.currEnemyStats.MP -= MPCost;
         if (turns.turn2.currEnemyStats.MP < 0) {
@@ -252,6 +261,9 @@ function calculateEnemyTurn(gameState, turns, defend) {
     } else if (action === "wind") {
         turns.turn2.message = "Wind";
         let enemyDamage = calculateDamage(turns.turn2.currEnemyStats.str, turns.turn2.currPlayerStats.def, 1.2);
+        if (turns.turn2.currPlayerStats.MaxHP === turns.turn2.currPlayerStats.HP && enemyDamage >= turns.turn2.currPlayerStats.HP) {
+            enemyDamage = turns.turn2.currPlayerStats.MaxHP - 1;
+        }
         turns.turn2.currPlayerStats.HP -= enemyDamage;
         turns.turn2.currEnemyStats.MP -= MPCost;
         if (turns.turn2.currEnemyStats.MP < 0) {
@@ -265,6 +277,9 @@ function calculateEnemyTurn(gameState, turns, defend) {
     } else if (action === "earth") {
         turns.turn2.message = "Earth";
         let enemyDamage = calculateDamage(turns.turn2.currEnemyStats.str, turns.turn2.currPlayerStats.def, 1.2);
+        if (turns.turn2.currPlayerStats.MaxHP === turns.turn2.currPlayerStats.HP && enemyDamage >= turns.turn2.currPlayerStats.HP) {
+            enemyDamage = turns.turn2.currPlayerStats.MaxHP - 1;
+        }
         turns.turn2.currPlayerStats.HP -= enemyDamage;
         turns.turn2.currEnemyStats.MP -= MPCost;
         if (turns.turn2.currEnemyStats.MP < 0) {
@@ -319,7 +334,7 @@ function calculateAI(turns, MPCost) {
 
 function calculateDamage(attackerStat, targetStat, modifier) {
     attackerStat = Math.round(attackerStat * modifier);
-    let baseDamage = ((attackerStat * 10) - (targetStat * 5));
+    let baseDamage = ((attackerStat * 7) - (targetStat * 5));
     let damage = baseDamage + rand(0, Math.round(baseDamage / 3));
     if (damage <= 0) {
         damage = 1;
@@ -375,6 +390,7 @@ function expCalc(currExp, playerLevel, enemyLevel) {
         }
     }
     exp += currExp;
+    exp += 10; // Small boost to reduce difficulty
     if (exp > 100) {
         exp = exp - 100;
         return {
@@ -405,12 +421,12 @@ function nextEnemy(messageData, playerData, newEnemy) {
 }
 
 function applyPlayerLevelUp(playerData) {
-    // Stats are recalculated based on a base value and a slightly random multiplier
-    let HP = 75 * Math.pow((rand(121, 123) / 100), playerData.level + 1);// item: 122, 124
-    let MP = 25 * Math.pow((rand(116, 118) / 100), playerData.level + 1);// item: 117, 119
-    let str = 10 * Math.pow((rand(119, 121) / 100), playerData.level + 1);// item: 119, 121
-    let def = 10 * Math.pow((rand(119, 121) / 100), playerData.level + 1);// item: 119, 121
-    let agi = 10 * Math.pow((rand(119, 121) / 100), playerData.level + 1);// item: 119, 121
+    // Stats are recalculated based on a base value and a multiplier
+    let HP = 75 * Math.pow(1.22, playerData.level + 1);// item: 122, 124
+    let MP = 25 * Math.pow(1.17, playerData.level + 1);// item: 117, 119
+    let str = 10 * Math.pow(1.2, playerData.level + 1);// item: 119, 121
+    let def = 10 * Math.pow(1.2, playerData.level + 1);// item: 119, 121
+    let agi = 10 * Math.pow(1.2, playerData.level + 1);// item: 119, 121
 
     let newStats = {
         level: playerData.level + 1,

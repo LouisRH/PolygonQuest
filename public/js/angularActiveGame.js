@@ -11,6 +11,18 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
     $scope.enemyHeal = 0;
     $scope.message1 = "";
     $scope.message2 = "";
+    $scope.weak = "???";
+    $scope.resist = "???";
+    $scope.playerHP = 100;
+    $scope.playerMP = 100;
+    $scope.enemyHP = 100;
+    $scope.enemyMP = 100;
+    $scope.exp = 0;
+    $scope.cureExp = 0;
+    $scope.fireExp = 0;
+    $scope.waterExp = 0;
+    $scope.windExp = 0;
+    $scope.earthExp = 0;
     $scope.disabled = {
         attack: false,
         cure: false,
@@ -74,7 +86,16 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
             exp: $scope.gameData.playerData.exp
         }
 
+        $scope.changeHPMPBars();
         $scope.checkMP();
+    }
+
+    $scope.changeHPMPBars = function() {
+        $scope.playerHP = Math.round(($scope.currPlayerStats.HP / $scope.currPlayerStats.MaxHP) * 100);
+        $scope.playerMP = Math.round(($scope.currPlayerStats.MP / $scope.currPlayerStats.MaxMP) * 100);
+        $scope.enemyHP = Math.round(($scope.currEnemyStats.HP / $scope.currEnemyStats.MaxHP) * 100);
+        $scope.enemyMP = Math.round(($scope.currEnemyStats.MP / $scope.currEnemyStats.MaxMP) * 100);
+        $scope.exp = $scope.currPlayerStats.exp;
     }
 
     $scope.checkMP = function() {
@@ -131,6 +152,7 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
                 $scope.playerDamage = responseGood.data.turn1.damage;
                 $scope.playerHeal = responseGood.data.turn1.cureVal;
                 $scope.message1 = responseGood.data.turn1.message;
+                $scope.changeHPMPBars();
 
                 if (responseGood.data.death === 0) {
                     $scope.currPlayerStats = responseGood.data.turn2.currPlayerStats;
@@ -146,7 +168,13 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
 
                     if (responseGood.data.death === 1) {
                         $scope.enemyLevelUp = 1;
+                        if (responseGood.data.levelUp === true) {
+                            $scope.playerLevelUp = true;
+                        }
                     } else if (responseGood.data.death === -1) {
+                        $scope.enemyDamage = responseGood.data.turn2.damage;
+                        $scope.enemyHeal = responseGood.data.turn2.cureVal;
+                        $scope.message2 = responseGood.data.turn2.message;
                         $scope.enemyLevelUp = -1;
                     }
                 }

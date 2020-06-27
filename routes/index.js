@@ -16,6 +16,10 @@ router.get("/game", function(req, res) {
     return;
 })
 
+router.get("/equipment", function(req, res) {
+    res.sendFile(path.join(appRoot, "public/html", "equipment.html"));
+})
+
 router.post("/game", async function(req, res) {
     if (req.body.messageType === "newGame") {
         if (await enemyData.getEnemyDataById(1) === null) {

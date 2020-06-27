@@ -8,38 +8,86 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <script src="/public/js/angularActiveGame.js"></script>
     <link rel="stylesheet" href="/public/css/main.css">
+    <link href='https://fonts.googleapis.com/css?family=Alata' rel='stylesheet'>
     <title>Polygon Quest</title>
 </head>
 <body>
     <div class="gameScreen" ng-app="activeGame" ng-controller="activeGameCtrl">
         <div class="commands">
             <button class="commandBtn" id="attackBtn" ng-click="action('attack')" ng-disabled="disabled.attack">Attack</button>
-            <button class="commandBtn" id="cureBtn" ng-click="action('cure')" ng-disabled="disabled.cure">Cure: {{currPlayerStats.cureMP}}MP</button>
-            <button class="commandBtn" id="fireBtn" ng-click="action('fire')" ng-disabled="disabled.fire">Fire: {{currPlayerStats.fireMP}}MP</button>
-            <button class="commandBtn" id="waterBtn" ng-click="action('water')" ng-disabled="disabled.water">Water: {{currPlayerStats.waterMP}}MP</button>
-            <button class="commandBtn" id="windBtn" ng-click="action('wind')" ng-disabled="disabled.wind">Wind: {{currPlayerStats.windMP}}MP</button>
-            <button class="commandBtn" id="earthBtn" ng-click="action('earth')" ng-disabled="disabled.earth">Earth: {{currPlayerStats.earthMP}}MP</button>
+            <button class="commandBtn" id="cureBtn" ng-click="action('cure')" ng-disabled="disabled.cure">Cure: {{currPlayerStats.cureMP}}MP
+                <div class="lvlInfo">
+                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="barContainer">
+                        <div class="bar spell" ng-style="{'width': cureExp + '%'}"></div>
+                    </div>
+                </div>
+            </button>
+            <button class="commandBtn" id="fireBtn" ng-click="action('fire')" ng-disabled="disabled.fire">Fire: {{currPlayerStats.fireMP}}MP
+                <div class="lvlInfo">
+                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="barContainer">
+                        <div class="bar spell" ng-style="{'width': fireExp + '%'}"></div>
+                    </div>
+                </div>
+            </button>
+            <button class="commandBtn" id="waterBtn" ng-click="action('water')" ng-disabled="disabled.water">Water: {{currPlayerStats.waterMP}}MP
+                <div class="lvlInfo">
+                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="barContainer">
+                        <div class="bar spell" ng-style="{'width': waterExp + '%'}"></div>
+                    </div>
+                </div>
+            </button>
+            <button class="commandBtn" id="windBtn" ng-click="action('wind')" ng-disabled="disabled.wind">Wind: {{currPlayerStats.windMP}}MP
+                <div class="lvlInfo">
+                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="barContainer">
+                        <div class="bar spell" ng-style="{'width': windExp + '%'}"></div>
+                    </div>
+                </div>
+            </button>
+            <button class="commandBtn" id="earthBtn" ng-click="action('earth')" ng-disabled="disabled.earth">Earth: {{currPlayerStats.earthMP}}MP
+                <div class="lvlInfo">
+                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="barContainer">
+                        <div class="bar spell" ng-style="{'width': earthExp + '%'}"></div>
+                    </div>
+                </div>
+            </button>
             <button class="commandBtn" id="equipmentBtn" ng-click="action('equipment')" ng-disabled="disabled.equipment">Equipment</button>
             <button class="commandBtn" id="nextBtn" ng-click="action('next')" ng-disabled="disabled.next">Next</button>
         </div>
         <div class="playerStats">
+            <div class="nametag">
+                <p>Name: {{gameData.playerData.name}}</p>
+                <p>Level: {{currPlayerStats.level}}</p>
+            </div><br>
+            <div class="HPMP">
+                <p>HP: {{currPlayerStats.HP}}</p>
+                <div class="barContainer">
+                    <div class="bar HP" ng-style="{'width': playerHP + '%'}"></div>
+                </div>
+                <p>MP: {{currPlayerStats.MP}}</p>
+                <div class="barContainer">
+                    <div class="bar MP" ng-style="{'width': playerMP + '%'}"></div>
+                </div>
+            </div><br>
             <div class="playerLabels">
-                <p>Name: </p>
-                <p>Level: </p>
-                <p>HP: </p>
-                <p>MP: </p>
                 <p>Str: </p>
                 <p>Def: </p>
                 <p>Agi: </p>
             </div>
             <div class="playerRawStats">
-                <p>{{gameData.playerData.name}}</p>
-                <p>{{currPlayerStats.level}}</p>
-                <p>{{currPlayerStats.HP}}</p>
-                <p>{{currPlayerStats.MP}}</p>
                 <p>{{currPlayerStats.str}}</p>
                 <p>{{currPlayerStats.def}}</p>
                 <p>{{currPlayerStats.agi}}</p>
+            </div>
+            <div class="exp">
+                <p>EXP:</p>
+                <div class="barContainer">
+                    <div class="bar expBar" ng-style="{'width': exp + '%'}"></div>
+                </div>
             </div>
         </div>
         <div class="combatScreen">
@@ -51,23 +99,33 @@
             <p>{{enemyHeal}}</p>
         </div>
         <div class="enemyStats">
+            <div class="nametag">
+                <p>Name: {{gameData.enemyData.name}}</p>
+                <p>Level: {{currEnemyStats.level}}</p>
+            </div><br>
+            <div class="HPMP">
+                <p>HP: {{currEnemyStats.HP}}</p>
+                <div class="barContainer">
+                    <div class="bar HP" ng-style="{'width': enemyHP + '%'}"></div>
+                </div>
+                <p>MP: {{currEnemyStats.MP}}</p>
+                <div class="barContainer">
+                    <div class="bar MP" ng-style="{'width': enemyMP + '%'}"></div>
+                </div>
+            </div><br>
             <div class="enemyLabels">
-                <p>Name: </p>
-                <p>Level: </p>
-                <p>HP: </p>
-                <p>MP: </p>
                 <p>Str: </p>
                 <p>Def: </p>
                 <p>Agi: </p>
             </div>
             <div class="enemyRawStats">
-                <p>{{gameData.enemyData.name}}</p>
-                <p>{{currEnemyStats.level}}</p>
-                <p>{{currEnemyStats.HP}}</p>
-                <p>{{currEnemyStats.MP}}</p>
                 <p>{{currEnemyStats.str}}</p>
                 <p>{{currEnemyStats.def}}</p>
                 <p>{{currEnemyStats.agi}}</p>
+            </div>
+            <div class="weakResist">
+                <p>Weakness: {{weak}}</p>
+                <p>Resistance: {{resist}}</p>
             </div>
         </div>
     </div>

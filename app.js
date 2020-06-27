@@ -19,9 +19,10 @@ app.use(cookieParser());
 const csp = require('express-csp-header');
 app.use(csp({
     policies: {
-        'default-src': [csp.SELF, csp.INLINE, 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js', "https://unpkg.com/@popperjs/core@2", "https://unpkg.com/tippy.js@6"],
-        'style-src': [csp.SELF, csp.INLINE],
-        'img-src': [csp.SELF]
+        'default-src': [csp.SELF, csp.INLINE, 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js'],
+        'style-src': [csp.SELF, csp.INLINE, 'https://fonts.googleapis.com/'],
+        'img-src': [csp.SELF],
+        'font-src': [csp.SELF, 'https://fonts.gstatic.com/']
     }
 }));
 
