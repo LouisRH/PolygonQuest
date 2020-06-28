@@ -75,9 +75,19 @@ function calculatePlayerTurn(gameState, turns) {
         if (turns.turn1.currPlayerStats.HP > gameState.currPlayerStats.MaxHP) {
             turns.turn1.currPlayerStats.HP = gameState.currPlayerStats.MaxHP;
         }
-        turns.turn1.currPlayerStats.MP -= (gameState.baseStats.MPCost - gameState.baseStats.cureMPReduction);
+        turns.turn1.currPlayerStats.MP -= turns.turn1.currPlayerStats.cureMP;
         if (turns.turn1.currPlayerStats.MP < 0) {
             turns.turn1.currPlayerStats.MP = 0
+        }
+        turns.turn1.currPlayerStats.cureExp += 1;
+        if (turns.turn1.currPlayerStats.cureExp === 5) {
+            turns.turn1.currPlayerStats.cureExp = 0;
+            turns.turn1.currPlayerStats.cureLvl += 1;
+            turns.turn1.currPlayerStats.cureMPReduction += 2;
+            turns.turn1.currPlayerStats.cureMP = gameState.baseStats.MPCost - turns.turn1.currPlayerStats.cureMPReduction;
+            if (turns.turn1.currPlayerStats.cureMP < 1) {
+                turns.turn1.currPlayerStats.cureMP = 1;
+            }
         }
         turns.turn1.cureVal = cureVal;
     } else if (gameState.messageType === "fire") {
@@ -91,9 +101,19 @@ function calculatePlayerTurn(gameState, turns) {
             playerDamage = Math.round(playerDamage * 0.5);
         }
         turns.turn1.currEnemyStats.HP -= playerDamage;
-        turns.turn1.currPlayerStats.MP -= (gameState.baseStats.MPCost - gameState.baseStats.fireMPReduction);
+        turns.turn1.currPlayerStats.MP -= turns.turn1.currPlayerStats.fireMP;
         if (turns.turn1.currPlayerStats.MP < 0) {
             turns.turn1.currPlayerStats.MP = 0
+        }
+        turns.turn1.currPlayerStats.fireExp += 1;
+        if (turns.turn1.currPlayerStats.fireExp === 5) {
+            turns.turn1.currPlayerStats.fireExp = 0;
+            turns.turn1.currPlayerStats.fireLvl += 1;
+            turns.turn1.currPlayerStats.fireMPReduction += 2;
+            turns.turn1.currPlayerStats.fireMP = gameState.baseStats.MPCost - turns.turn1.currPlayerStats.fireMPReduction;
+            if (turns.turn1.currPlayerStats.fireMP < 1) {
+                turns.turn1.currPlayerStats.fireMP = 1;
+            }
         }
         turns.turn1.damage = playerDamage;
         if (turns.turn1.currEnemyStats.HP <= 0) {
@@ -116,9 +136,19 @@ function calculatePlayerTurn(gameState, turns) {
             playerDamage = Math.round(playerDamage * 0.5);
         }
         turns.turn1.currEnemyStats.HP -= playerDamage;
-        turns.turn1.currPlayerStats.MP -= (gameState.baseStats.MPCost - gameState.baseStats.waterMPReduction);
+        turns.turn1.currPlayerStats.MP -= turns.turn1.currPlayerStats.waterMP;
         if (turns.turn1.currPlayerStats.MP < 0) {
             turns.turn1.currPlayerStats.MP = 0
+        }
+        turns.turn1.currPlayerStats.waterExp += 1;
+        if (turns.turn1.currPlayerStats.waterExp === 5) {
+            turns.turn1.currPlayerStats.waterExp = 0;
+            turns.turn1.currPlayerStats.waterLvl += 1;
+            turns.turn1.currPlayerStats.waterMPReduction += 2;
+            turns.turn1.currPlayerStats.waterMP = gameState.baseStats.MPCost - turns.turn1.currPlayerStats.waterMPReduction;
+            if (turns.turn1.currPlayerStats.waterMP < 1) {
+                turns.turn1.currPlayerStats.waterMP = 1;
+            }
         }
         turns.turn1.damage = playerDamage;
         if (turns.turn1.currEnemyStats.HP <= 0) {
@@ -141,9 +171,19 @@ function calculatePlayerTurn(gameState, turns) {
             playerDamage = Math.round(playerDamage * 0.5);
         }
         turns.turn1.currEnemyStats.HP -= playerDamage;
-        turns.turn1.currPlayerStats.MP -= (gameState.baseStats.MPCost - gameState.baseStats.windMPReduction);
+        turns.turn1.currPlayerStats.MP -= turns.turn1.currPlayerStats.windMP;
         if (turns.turn1.currPlayerStats.MP < 0) {
             turns.turn1.currPlayerStats.MP = 0
+        }
+        turns.turn1.currPlayerStats.windExp += 1;
+        if (turns.turn1.currPlayerStats.windExp === 5) {
+            turns.turn1.currPlayerStats.windExp = 0;
+            turns.turn1.currPlayerStats.windLvl += 1;
+            turns.turn1.currPlayerStats.windMPReduction += 2;
+            turns.turn1.currPlayerStats.windMP = gameState.baseStats.MPCost - turns.turn1.currPlayerStats.windMPReduction;
+            if (turns.turn1.currPlayerStats.windMP < 1) {
+                turns.turn1.currPlayerStats.windMP = 1;
+            }
         }
         turns.turn1.damage = playerDamage;
         if (turns.turn1.currEnemyStats.HP <= 0) {
@@ -166,9 +206,19 @@ function calculatePlayerTurn(gameState, turns) {
             playerDamage = Math.round(playerDamage * 0.5);
         }
         turns.turn1.currEnemyStats.HP -= playerDamage;
-        turns.turn1.currPlayerStats.MP -= (gameState.baseStats.MPCost - gameState.baseStats.earthMPReduction);
+        turns.turn1.currPlayerStats.MP -= turns.turn1.currPlayerStats.earthMP;
         if (turns.turn1.currPlayerStats.MP < 0) {
             turns.turn1.currPlayerStats.MP = 0
+        }
+        turns.turn1.currPlayerStats.earthExp += 1;
+        if (turns.turn1.currPlayerStats.earthExp === 5) {
+            turns.turn1.currPlayerStats.earthExp = 0;
+            turns.turn1.currPlayerStats.earthLvl += 1;
+            turns.turn1.currPlayerStats.earthMPReduction += 2;
+            turns.turn1.currPlayerStats.earthMP = gameState.baseStats.MPCost - turns.turn1.currPlayerStats.earthMPReduction;
+            if (turns.turn1.currPlayerStats.earthMP < 1) {
+                turns.turn1.currPlayerStats.earthMP = 1;
+            }
         }
         turns.turn1.damage = playerDamage;
         if (turns.turn1.currEnemyStats.HP <= 0) {
@@ -185,7 +235,7 @@ function calculatePlayerTurn(gameState, turns) {
     return turns;
 }
 
-function calculateEnemyTurn(gameState, turns, defend) {
+function calculateEnemyTurn(gameState, turns) {
     turns.turn2.currPlayerStats = turns.turn1.currPlayerStats;
     turns.turn2.currEnemyStats = turns.turn1.currEnemyStats;
 
@@ -416,17 +466,18 @@ function nextEnemy(messageData, playerData, newEnemy) {
     if (messageData.enemyLevelUp !== 0) {
         newEnemyStats = applyEnemyLevelChange(playerData, messageData.enemyLevelUp);
     }
-    let updatedGame = updatePlayerData(playerData, newPlayerStats, newEnemyStats);
+    let updatedGame = updatePlayerData(playerData, newPlayerStats, newEnemyStats, messageData.newItem, messageData.spellData);
+
     return updatedGame;
 }
 
 function applyPlayerLevelUp(playerData) {
     // Stats are recalculated based on a base value and a multiplier
-    let HP = 75 * Math.pow(1.22, playerData.level + 1);// item: 122, 124
-    let MP = 25 * Math.pow(1.17, playerData.level + 1);// item: 117, 119
-    let str = 10 * Math.pow(1.2, playerData.level + 1);// item: 119, 121
-    let def = 10 * Math.pow(1.2, playerData.level + 1);// item: 119, 121
-    let agi = 10 * Math.pow(1.2, playerData.level + 1);// item: 119, 121
+    let HP = 75 * Math.pow(1.22, playerData.level + 1);
+    let MP = 25 * Math.pow(1.13, playerData.level + 1);
+    let str = 10 * Math.pow(1.2, playerData.level + 1);
+    let def = 10 * Math.pow(1.2, playerData.level + 1);
+    let agi = 10 * Math.pow(1.2, playerData.level + 1);
 
     let newStats = {
         level: playerData.level + 1,
@@ -499,13 +550,13 @@ function applyEnemyLevelChange(playerData, change) {
     }
 
     newStats.HP = Math.round(75 * Math.pow((rand(121, 123) / 100), newStats.level));
-    newStats.MP = Math.round(25 * Math.pow((rand(116, 118) / 100), newStats.level));
+    newStats.MP = Math.round(25 * Math.pow((rand(112, 114) / 100), newStats.level));
     newStats.str = Math.round(10 * Math.pow((rand(119, 121) / 100), newStats.level));
     newStats.def = Math.round(10 * Math.pow((rand(119, 121) / 100), newStats.level));
     newStats.agi = Math.round(10 * Math.pow((rand(119, 121) / 100), newStats.level));
 
     newStats.itemHP = Math.round(rarityMult * (75 * Math.pow((rand(121, 123) / 100), newStats.level)));
-    newStats.itemMP = Math.round(rarityMult * (25 * Math.pow((rand(116, 118) / 100), newStats.level)));
+    newStats.itemMP = Math.round(rarityMult * (25 * Math.pow((rand(112, 114) / 100), newStats.level)));
     newStats.itemStr = Math.round(rarityMult * (10 * Math.pow((rand(119, 121) / 100), newStats.level)));
     newStats.itemDef = Math.round(rarityMult * (10 * Math.pow((rand(119, 121) / 100), newStats.level)));
     newStats.itemAgi = Math.round(rarityMult * (10 * Math.pow((rand(119, 121) / 100), newStats.level)));
@@ -513,7 +564,7 @@ function applyEnemyLevelChange(playerData, change) {
     return newStats;
 }
 
-async function updatePlayerData(playerData, newPlayerStats, newEnemyStats) {
+async function updatePlayerData(playerData, newPlayerStats, newEnemyStats, newItem, spellData) {
     if (newPlayerStats !== null) {
         playerData.level = newPlayerStats.level;
         playerData.HP = newPlayerStats.HP;
@@ -538,6 +589,69 @@ async function updatePlayerData(playerData, newPlayerStats, newEnemyStats) {
         playerData.enemyWeak = newEnemyStats.weak;
         playerData.enemyResist = newEnemyStats.resist;
     }
+
+    playerData.newItem = newItem;
+
+    playerData.cureMP = spellData.cureMP;
+    playerData.fireMP = spellData.fireMP;
+    playerData.waterMP = spellData.waterMP;
+    playerData.windMP = spellData.windMP;
+    playerData.earthMP = spellData.earthMP;
+
+    playerData.cureLvl = spellData.cureLvl;
+    playerData.fireLvl = spellData.fireLvl;
+    playerData.waterLvl = spellData.waterLvl;
+    playerData.windLvl = spellData.windLvl;
+    playerData.earthLvl = spellData.earthLvl;
+
+    playerData.cureMPReduction = spellData.cureMPReduction;
+    playerData.fireMPReduction = spellData.fireMPReduction;
+    playerData.waterMPReduction = spellData.waterMPReduction;
+    playerData.windMPReduction = spellData.windMPReduction;
+    playerData.earthMPReduction = spellData.earthMPReduction;
+
+    playerData.cureExp = spellData.cureExp;
+    playerData.fireExp = spellData.fireExp;
+    playerData.waterExp = spellData.waterExp;
+    playerData.windExp = spellData.windExp;
+    playerData.earthExp = spellData.earthExp;
+
+    return playerData;
+}
+
+async function updateItemData(playerData, newEquips) {
+    if (newEquips.weapon !== null) {
+        playerData.weapon = newEquips.weapon;
+        playerData.itemStr = newEquips.weapon.bonus;
+        playerData.crit = newEquips.weapon.crit;
+        playerData.MPCost = newEquips.weapon.MPCost;
+        playerData.cureMP = playerData.MPCost - playerData.cureMPReduction;
+        playerData.fireMP = playerData.MPCost - playerData.fireMPReduction;
+        playerData.waterMP = playerData.MPCost - playerData.waterMPReduction;
+        playerData.windMP = playerData.MPCost - playerData.windMPReduction;
+        playerData.earthMP = playerData.MPCost - playerData.earthMPReduction;
+    }
+
+    if (newEquips.shield !== null) {
+        playerData.shield = newEquips.shield;
+        playerData.itemHP = newEquips.shield.bonus;
+    }
+
+    if (newEquips.helmet !== null) {
+        playerData.helmet = newEquips.helmet;
+        playerData.itemMP = newEquips.helmet.bonus;
+    }
+
+    if (newEquips.chestplate !== null) {
+        playerData.chestplate = newEquips.chestplate;
+        playerData.itemDef = newEquips.chestplate.bonus;
+    }
+
+    if (newEquips.boots !== null) {
+        playerData.boots = newEquips.boots;
+        playerData.itemAgi = newEquips.boots.bonus;
+    }
+
     return playerData;
 }
 
@@ -555,5 +669,6 @@ module.exports = {
     nextEnemy: nextEnemy,
     applyPlayerLevelUp: applyPlayerLevelUp,
     applyEnemyLevelChange: applyEnemyLevelChange,
-    updatePlayerData: updatePlayerData
+    updatePlayerData: updatePlayerData,
+    updateItemData: updateItemData
 }

@@ -78,16 +78,41 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
             str: $scope.gameData.playerData.str + $scope.gameData.playerData.itemStr,
             def: $scope.gameData.playerData.def + $scope.gameData.playerData.itemDef,
             agi: $scope.gameData.playerData.agi + $scope.gameData.playerData.itemAgi,
-            cureMP: $scope.gameData.playerData.MPCost - $scope.gameData.playerData.cureMPReduction,
-            fireMP: $scope.gameData.playerData.MPCost - $scope.gameData.playerData.fireMPReduction,
-            waterMP: $scope.gameData.playerData.MPCost - $scope.gameData.playerData.waterMPReduction,
-            windMP: $scope.gameData.playerData.MPCost - $scope.gameData.playerData.windMPReduction,
-            earthMP: $scope.gameData.playerData.MPCost - $scope.gameData.playerData.earthMPReduction,
-            exp: $scope.gameData.playerData.exp
+            cureMP: $scope.gameData.playerData.cureMP,
+            fireMP: $scope.gameData.playerData.fireMP,
+            waterMP: $scope.gameData.playerData.waterMP,
+            windMP: $scope.gameData.playerData.windMP,
+            earthMP: $scope.gameData.playerData.earthMP,
+            exp: $scope.gameData.playerData.exp,
+            cureLvl: $scope.gameData.playerData.cureLvl,
+            fireLvl: $scope.gameData.playerData.fireLvl,
+            waterLvl: $scope.gameData.playerData.waterLvl,
+            windLvl: $scope.gameData.playerData.windLvl,
+            earthLvl: $scope.gameData.playerData.earthLvl,
+            cureMPReduction: $scope.gameData.playerData.cureMPReduction,
+            fireMPReduction: $scope.gameData.playerData.fireMPReduction,
+            waterMPReduction: $scope.gameData.playerData.waterMPReduction,
+            windMPReduction: $scope.gameData.playerData.windMPReduction,
+            earthMPReduction: $scope.gameData.playerData.earthMPReduction,
+            cureExp: $scope.gameData.playerData.cureExp,
+            fireExp: $scope.gameData.playerData.fireExp,
+            waterExp: $scope.gameData.playerData.waterExp,
+            windExp: $scope.gameData.playerData.windExp,
+            earthExp: $scope.gameData.playerData.earthExp,
         }
 
+        $scope.changeExpBars();
         $scope.changeHPMPBars();
         $scope.checkMP();
+    }
+
+    $scope.changeExpBars = function() {
+        $scope.cureExp = $scope.currPlayerStats.cureExp * 20;
+        $scope.fireExp = $scope.currPlayerStats.fireExp * 20;
+        $scope.waterExp = $scope.currPlayerStats.waterExp * 20;
+        $scope.windExp = $scope.currPlayerStats.windExp * 20;
+        $scope.earthExp = $scope.currPlayerStats.earthExp * 20;
+        $scope.exp = $scope.currPlayerStats.exp;
     }
 
     $scope.changeHPMPBars = function() {
@@ -95,7 +120,6 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
         $scope.playerMP = Math.round(($scope.currPlayerStats.MP / $scope.currPlayerStats.MaxMP) * 100);
         $scope.enemyHP = Math.round(($scope.currEnemyStats.HP / $scope.currEnemyStats.MaxHP) * 100);
         $scope.enemyMP = Math.round(($scope.currEnemyStats.MP / $scope.currEnemyStats.MaxMP) * 100);
-        $scope.exp = $scope.currPlayerStats.exp;
     }
 
     $scope.checkMP = function() {
@@ -152,6 +176,7 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
                 $scope.playerDamage = responseGood.data.turn1.damage;
                 $scope.playerHeal = responseGood.data.turn1.cureVal;
                 $scope.message1 = responseGood.data.turn1.message;
+                $scope.changeExpBars();
                 $scope.changeHPMPBars();
 
                 if (responseGood.data.death === 0) {
@@ -184,12 +209,39 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
         } else if (action === "equipment" || (action === "next" && $scope.enemyLevelUp === 1)) {
             $scope.disabled.equipment = true;
             $scope.disabled.next = true;
+            var newItem = false;
+            if ($scope.enemyLevelUp === 1) {
+                newItem = true;
+            }
             sendData = {
                 messageType: "save",
                 playerID: $scope.gameData.playerData._id,
                 playerLevelUp: $scope.playerLevelUp,
                 enemyLevelUp: $scope.enemyLevelUp,
-                exp: $scope.currPlayerStats.exp
+                exp: $scope.currPlayerStats.exp,
+                spellData: {
+                    cureMP: $scope.currPlayerStats.cureMP,
+                    fireMP: $scope.currPlayerStats.fireMP,
+                    waterMP: $scope.currPlayerStats.waterMP,
+                    windMP: $scope.currPlayerStats.windMP,
+                    earthMP: $scope.currPlayerStats.earthMP,
+                    cureLvl: $scope.currPlayerStats.cureLvl,
+                    fireLvl: $scope.currPlayerStats.fireLvl,
+                    waterLvl: $scope.currPlayerStats.waterLvl,
+                    windLvl: $scope.currPlayerStats.windLvl,
+                    earthLvl: $scope.currPlayerStats.earthLvl,
+                    cureMPReduction: $scope.currPlayerStats.cureMPReduction,
+                    fireMPReduction: $scope.currPlayerStats.fireMPReduction,
+                    waterMPReduction: $scope.currPlayerStats.waterMPReduction,
+                    windMPReduction: $scope.currPlayerStats.windMPReduction,
+                    earthMPReduction: $scope.currPlayerStats.earthMPReduction,
+                    cureExp: $scope.currPlayerStats.cureExp,
+                    fireExp: $scope.currPlayerStats.fireExp,
+                    waterExp: $scope.currPlayerStats.waterExp,
+                    windExp: $scope.currPlayerStats.windExp,
+                    earthExp: $scope.currPlayerStats.earthExp
+                },
+                newItem: newItem
             }
             $http.post('/equipment', sendData).then((responseGood) => {
                 var url = "http://" + $window.location.host + "/equipment";
@@ -205,7 +257,29 @@ app.controller('activeGameCtrl', function($scope, $http, $window) {
                 playerID: $scope.gameData.playerData._id,
                 playerLevelUp: $scope.playerLevelUp,
                 enemyLevelUp: $scope.enemyLevelUp,
-                exp: $scope.currPlayerStats.exp
+                exp: $scope.currPlayerStats.exp,
+                spellData: {
+                    cureMP: $scope.currPlayerStats.cureMP,
+                    fireMP: $scope.currPlayerStats.fireMP,
+                    waterMP: $scope.currPlayerStats.waterMP,
+                    windMP: $scope.currPlayerStats.windMP,
+                    earthMP: $scope.currPlayerStats.earthMP,
+                    cureLvl: $scope.currPlayerStats.cureLvl,
+                    fireLvl: $scope.currPlayerStats.fireLvl,
+                    waterLvl: $scope.currPlayerStats.waterLvl,
+                    windLvl: $scope.currPlayerStats.windLvl,
+                    earthLvl: $scope.currPlayerStats.earthLvl,
+                    cureMPReduction: $scope.currPlayerStats.cureMPReduction,
+                    fireMPReduction: $scope.currPlayerStats.fireMPReduction,
+                    waterMPReduction: $scope.currPlayerStats.waterMPReduction,
+                    windMPReduction: $scope.currPlayerStats.windMPReduction,
+                    earthMPReduction: $scope.currPlayerStats.earthMPReduction,
+                    cureExp: $scope.currPlayerStats.cureExp,
+                    fireExp: $scope.currPlayerStats.fireExp,
+                    waterExp: $scope.currPlayerStats.waterExp,
+                    windExp: $scope.currPlayerStats.windExp,
+                    earthExp: $scope.currPlayerStats.earthExp
+                }
             }
             $http.post('/game', sendData).then((responseGood) => {
                 $scope.gameData = responseGood.data;

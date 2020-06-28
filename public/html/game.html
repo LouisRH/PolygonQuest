@@ -17,7 +17,7 @@
             <button class="commandBtn" id="attackBtn" ng-click="action('attack')" ng-disabled="disabled.attack">Attack</button>
             <button class="commandBtn" id="cureBtn" ng-click="action('cure')" ng-disabled="disabled.cure">Cure: {{currPlayerStats.cureMP}}MP
                 <div class="lvlInfo">
-                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="lvlTag">Lvl: {{currPlayerStats.cureLvl}}</div>
                     <div class="barContainer">
                         <div class="bar spell" ng-style="{'width': cureExp + '%'}"></div>
                     </div>
@@ -25,7 +25,7 @@
             </button>
             <button class="commandBtn" id="fireBtn" ng-click="action('fire')" ng-disabled="disabled.fire">Fire: {{currPlayerStats.fireMP}}MP
                 <div class="lvlInfo">
-                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="lvlTag">Lvl: {{currPlayerStats.fireLvl}}</div>
                     <div class="barContainer">
                         <div class="bar spell" ng-style="{'width': fireExp + '%'}"></div>
                     </div>
@@ -33,7 +33,7 @@
             </button>
             <button class="commandBtn" id="waterBtn" ng-click="action('water')" ng-disabled="disabled.water">Water: {{currPlayerStats.waterMP}}MP
                 <div class="lvlInfo">
-                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="lvlTag">Lvl: {{currPlayerStats.waterLvl}}</div>
                     <div class="barContainer">
                         <div class="bar spell" ng-style="{'width': waterExp + '%'}"></div>
                     </div>
@@ -41,7 +41,7 @@
             </button>
             <button class="commandBtn" id="windBtn" ng-click="action('wind')" ng-disabled="disabled.wind">Wind: {{currPlayerStats.windMP}}MP
                 <div class="lvlInfo">
-                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="lvlTag">Lvl: {{currPlayerStats.windLvl}}</div>
                     <div class="barContainer">
                         <div class="bar spell" ng-style="{'width': windExp + '%'}"></div>
                     </div>
@@ -49,7 +49,7 @@
             </button>
             <button class="commandBtn" id="earthBtn" ng-click="action('earth')" ng-disabled="disabled.earth">Earth: {{currPlayerStats.earthMP}}MP
                 <div class="lvlInfo">
-                    <div class="lvlTag">Lvl: 0</div>
+                    <div class="lvlTag">Lvl: {{currPlayerStats.earthLvl}}</div>
                     <div class="barContainer">
                         <div class="bar spell" ng-style="{'width': earthExp + '%'}"></div>
                     </div>

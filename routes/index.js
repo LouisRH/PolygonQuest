@@ -4,6 +4,7 @@ const path = require("path");
 const data = require("../data");
 const gameData = data.gameData;
 const enemyData = data.enemyData;
+const itemData = data.itemData;
 const gameCalc = data.gameCalc;
 
 router.get("/", function(req, res) {
@@ -25,6 +26,9 @@ router.post("/game", async function(req, res) {
         if (await enemyData.getEnemyDataById(1) === null) {
             let enemySeed = await enemyData.seedEnemies();
         }
+        if (await itemData.getItemDataById(1) === null) {
+            let itemSeed = await itemData.seedItems();
+        }
         let newGameData = await gameData.newGame(req.body);
         const expiresAt = new Date();
         expiresAt.setMinutes(expiresAt.getMinutes() + 10000);
@@ -36,6 +40,12 @@ router.post("/game", async function(req, res) {
             res.status(404).send({error: "Cookie not found"});
         }
         let playerData = await gameData.getGameDataById(gameCookie);
+
+        if (req.body.equipChange) {
+            let updatedGame = await gameCalc.updateItemData(playerData, req.body.newEquips);
+            playerData = await gameData.updateGame(updatedGame);
+        }
+
         let currEnemyData = await enemyData.getEnemyDataById(playerData.enemyID);
         let result = {
             playerData: playerData,
@@ -76,8 +86,14 @@ router.post("/equipment", async function(req, res) {
             res.status(404).send({error: "Cookie not found"});
         }
         let playerData = await gameData.getGameDataById(gameCookie);
+        let newItem = null;
+        if (playerData.newItem === true) {
+            newItem = await itemData.pickRandomItem(playerData.enemyLevel - 1);
+        }
+        console.log(newItem);
         let result = {
-            playerData: playerData
+            playerData: playerData,
+            newItem: newItem
         }
         res.status(200).send(result);
     } else {
